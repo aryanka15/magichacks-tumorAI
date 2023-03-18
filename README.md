@@ -1,0 +1,2 @@
+# magichacks-tumorAI
+MagicHacks hackathon 
