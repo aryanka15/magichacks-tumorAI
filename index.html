@@ -1,37 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>Save images to Local Storage</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com/%22%3E" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap"
+      rel="stylesheet"
+    />
     <script type="module" src="./app.js"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
-    <h1 style="font-size: 40px" style="font-size: 40px">
-      Brain Tumor Detection
-    </h1>
-    <h2>Please Attach an Image of a Brain Tumor</h2>
+    <div class="card" style="text-align: center">
+      <h1>BrainTumes</h1>
+      <h2>Please Attach an Image of a Brain Tumor</h2>
 
-    <section class="file-section">
-      <div class="file-group">
-        <label for="file-input">Upload a picture</label>
-        <input type="file" id="file-input" />
-        <button id="submitButton">Submit</button>
-      </div>
-    </section>
+      <section class="file-section">
+        <div class="file-group">
+          <label for="file-input" class="label">
+            <input type="file" id="file-input" />
+            <span id="input_display">Select a file</span>
+          </label>
+          <button id="submitButton">Submit</button>
+        </div>
+      </section>
 
-    <section class="output">
-      <div>
-        <h2>Output</h2>
-        <p id="prediction"></p>
-      </div>
-    </section>
+      <section class="output">
+        <div>
+          <h2>Output</h2>
+          <p id="prediction"></p>
+        </div>
+      </section>
 
-    <section class="image-section">
-      <img src="" id="image" />
-    </section>
+      <section class="image-section">
+        <img src="" id="image" />
+      </section>
+
+      <section class="chatGPTOutput">
+        <div>
+          <h2>More Info</h2>
+          <p id="chatGPTOutput"></p>
+        </div>
+      </section>
+    </div>
   </body>
 </html>

@@ -63,6 +63,10 @@ function getImage() {
   // Check if an image has been found in the input
   document.getElementById("prediction").innerHTML = "Loading...";
   if (!fileInput.files[0]) throw new Error("Image not found");
+  else {
+    document.getElementById("input_display").innerHTML = "Submitted!";
+    document.getElementById("chatGPTOutput").innerHTML = "Loading...";
+  }
   const file = fileInput.files[0];
 
   // Get the data url form the image
