@@ -31,7 +31,7 @@ console.log("Model loaded");
 /**
  * Classify with the image with the mobilenet model
  */
-function classifyImage(image_tf) {
+async function classifyImage(image_tf) {
   console.log("Started predicting");
   let predictions = model.predict(image_tf);
   // Interpret the predictions of tensorflowjs
@@ -41,8 +41,8 @@ function classifyImage(image_tf) {
   let max_index = predictions.argMax(1).dataSync()[0];
   // Use the index to get the key from the interpet_key array
   let prediction = interpet_key[max_index];
-  displayDescription(prediction);
   console.log("Finished predicting");
+  return prediction;
 }
 
 function displayDescription(text) {
@@ -72,7 +72,7 @@ function getImage() {
     imageElement.src = dataUrl;
 
     // When image object is loaded
-    imageElement.onload = function () {
+    imageElement.onload = async function () {
       // Set <img /> attributes
       image.setAttribute("src", this.src);
       image.setAttribute("height", this.height);
@@ -81,7 +81,9 @@ function getImage() {
       const smallImg = tf.image.resizeBilinear(image_tf, [180, 180]);
       const resized = tf.cast(smallImg, "float32");
       const t4d = tf.tensor4d(resized.dataSync(), [1, 180, 180, 3]);
-      classifyImage(t4d);
+      let prediction = await classifyImage(t4d);
+      displayDescription(prediction);
+      getGPTResults(prediction);
     };
     // Add the image-loaded class to the body
     document.body.classList.add("image-loaded");
@@ -90,7 +92,40 @@ function getImage() {
   // Get data URL
   reader.readAsDataURL(file);
 }
+
 document.getElementById("submitButton").addEventListener("click", () => {
   console.log("Button clicked");
   getImage();
 });
+
+function getGPTResults(prediction) {
+  // curl https://api.openai.com/v1/chat/completions \
+  // -H "Content-Type: application/json" \
+  // -H "Authorization: Bearer $OPENAI_API_KEY" \
+  // -d '{
+  //    "model": "gpt-3.5-turbo",
+  //    "messages": [{"role": "user", "content": "Say this is a test!"}],
+  //    "temperature": 0.7
+  //  }'
+
+  // Convert curl above to fetch
+  fetch("https://api.openai.com/v1/chat/completions/", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization:
+        "Bearer " + "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",
+    },
+    body: JSON.stringify({
+      model: "text-davinci-003",
+      messages: [{ role: "user", content: "Give me info on " + prediction }],
+      temperature: 0,
+      max_tokens: 700,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+    });
+}

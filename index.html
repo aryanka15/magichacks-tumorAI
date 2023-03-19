@@ -29,22 +29,15 @@
       </div>
     </section>
 
+    <section class="open-ai-output">
+      <div>
+        <h2>More Info:</h2>
+        <p id="open-ai-output"></p>
+      </div>
+    </section>
+
     <section class="image-section">
       <img src="" id="image" />
     </section>
-
-    <script>
-      document
-        .querySelector("#myFileInput")
-        .addEventListener("change", function () {
-          const reader = new FileReader();
-
-          reader.addEventListener("load", () => {
-            clocalStorage.setItem("recent-image", reader.result);
-          });
-
-          reader.readAsDatatURL(this.files[0]);
-        });
-    </script>
   </body>
 </html>

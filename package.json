@@ -1,0 +1,23 @@
+{
+  "name": "magichacks-tumorai",
+  "version": "1.0.0",
+  "description": "MagicHacks hackathon",
+  "main": "GPTResults.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aryanka15/magichacks-tumorAI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aryanka15/magichacks-tumorAI/issues"
+  },
+  "homepage": "https://github.com/aryanka15/magichacks-tumorAI#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

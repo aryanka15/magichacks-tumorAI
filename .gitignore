@@ -1,1 +1,4 @@
 model/
+node_modules/
+SymptomSolver.jsx
+.env
