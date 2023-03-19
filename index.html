@@ -1,36 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <title>Save images to Local Storage</title>
+    <meta charset="UTF-8">
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script type="module" src="./app.js"></script>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body>
-    <h1 style="font-size: 40px" style="font-size: 40px">
-      Brain Tumor Detection
-    </h1>
-    <h2>Please Attach an Image of a Brain Tumor</h2>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main">
+        <div class="card">
+            <h1 style="position:relative; left: 325px;">BraiTums</h1>
+            <h2 style="font-size: 15px">Get full diagnose and analysis of a brain tumor in seconds! We alleviate the long diagnosic process and provide a deep analysis of the brain tumor such as the type of brain tumor, symptoms, treatment options, and much more. With BraiTums, get a deep brain tumor analysis in seconds!</h2>
+           
+          
+              <section class="file-section">
+                <div class="file-group">
+                  <label for="file-input" style="font-size: 15px">Upload a picture</label>
+                  <input type="file" id="file-input" />
+                  <button id="submitButton">Submit</button>
+                </div>
+              </section>
+          
+              <section class="output">
+                <div>
+                  <h2 style="font-size:20px"><font color="orange">Output</font></h2>
+                  <p id="prediction"></p>
+                </div>
+              </section>
+          
+              <section class="image-section">
+                <img src="" id="image" />
+              </section>
+        </div>
+    </div>
+    
 
-    <section class="file-section">
-      <div class="file-group">
-        <label for="file-input">Upload a picture</label>
-        <input type="file" id="file-input" />
-        <button id="submitButton">Submit</button>
-      </div>
-    </section>
-
-    <section class="output">
-      <div>
-        <h2>Output</h2>
-        <p id="prediction"></p>
-      </div>
-    </section>
-
-    <section class="image-section">
-      <img src="" id="image" />
-    </section>
-  </body>
+    
+</body>
 </html>
