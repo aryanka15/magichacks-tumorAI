@@ -1,26 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>Save images to Local Storage</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-    <h1 style="font-size: 40px;" style="font-size: 40px;">Save images to Local Storage</h1>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script type="module" src="./app.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <h1 style="font-size: 40px" style="font-size: 40px">
+      Brain Tumor Detection
+    </h1>
     <h2>Please Attach an Image of a Brain Tumor</h2>
-    <input type="file" id="myFileInput">
+
+    <section class="file-section">
+      <div class="file-group">
+        <label for="file-input">Upload a picture</label>
+        <input type="file" id="file-input" />
+        <button id="submitButton">Submit</button>
+      </div>
+    </section>
+
+    <section class="output">
+      <div>
+        <h2>Output</h2>
+        <p id="prediction"></p>
+      </div>
+    </section>
+
+    <section class="image-section">
+      <img src="" id="image" />
+    </section>
 
     <script>
-        document.querySelector("#myFileInput").addEventListener("change", function () {
-            const reader = new FileReader();
+      document
+        .querySelector("#myFileInput")
+        .addEventListener("change", function () {
+          const reader = new FileReader();
 
-            reader.addEventListener("load", () => {
-                clocalStorage.setItem("recent-image", reader.result);
-            });
+          reader.addEventListener("load", () => {
+            clocalStorage.setItem("recent-image", reader.result);
+          });
 
-            reader.readAsDatatURL(this.files[0]);
+          reader.readAsDatatURL(this.files[0]);
         });
     </script>
-</body>
+  </body>
 </html>

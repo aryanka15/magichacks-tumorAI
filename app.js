@@ -1,8 +1,14 @@
 const fileInput = document.getElementById("file-input");
 const image = document.getElementById("image");
 const description = document.getElementById("prediction");
-
-let model = await tf.loadLayersModel('model_js/model.json');;
+let interpet_key = [
+  "glioma_tumor",
+  "meningioma_tumor",
+  "no_tumor",
+  "pituitary_tumor",
+];
+let model = await tf.loadLayersModel("http://127.0.0.1:8080/model.json");
+console.log("Model loaded");
 
 // /**
 //  * Display the result in the page
@@ -25,10 +31,22 @@ let model = await tf.loadLayersModel('model_js/model.json');;
 /**
  * Classify with the image with the mobilenet model
  */
-function classifyImage() {
-  model.classify(image).then((predictions) => {
-    displayDescription(predictions);
-  });
+function classifyImage(image_tf) {
+  console.log("Started predicting");
+  let predictions = model.predict(image_tf);
+  // Interpret the predictions of tensorflowjs
+  console.log(predictions.dataSync());
+  console.log(predictions);
+  // Index of largest value in predictions.dataSync()
+  let max_index = predictions.argMax(1).dataSync()[0];
+  // Use the index to get the key from the interpet_key array
+  let prediction = interpet_key[max_index];
+  displayDescription(prediction);
+  console.log("Finished predicting");
+}
+
+function displayDescription(text) {
+  document.getElementById("prediction").innerHTML = text;
 }
 
 /**
@@ -36,6 +54,7 @@ function classifyImage() {
  */
 function getImage() {
   // Check if an image has been found in the input
+  document.getElementById("prediction").innerHTML = "Loading...";
   if (!fileInput.files[0]) throw new Error("Image not found");
   const file = fileInput.files[0];
 
@@ -46,7 +65,7 @@ function getImage() {
   reader.onload = function (event) {
     // Ge the data url
     const dataUrl = event.target.result;
-    console.log("Hi")
+    console.log("Hi");
 
     // Create image object
     const imageElement = new Image();
@@ -58,11 +77,12 @@ function getImage() {
       image.setAttribute("src", this.src);
       image.setAttribute("height", this.height);
       image.setAttribute("width", this.width);
-
-      // Classify image
-      classifyImage();
+      let image_tf = tf.browser.fromPixels(this);
+      const smallImg = tf.image.resizeBilinear(image_tf, [180, 180]);
+      const resized = tf.cast(smallImg, "float32");
+      const t4d = tf.tensor4d(resized.dataSync(), [1, 180, 180, 3]);
+      classifyImage(t4d);
     };
-
     // Add the image-loaded class to the body
     document.body.classList.add("image-loaded");
   };
@@ -70,3 +90,7 @@ function getImage() {
   // Get data URL
   reader.readAsDataURL(file);
 }
+document.getElementById("submitButton").addEventListener("click", () => {
+  console.log("Button clicked");
+  getImage();
+});
