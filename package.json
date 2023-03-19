@@ -2,9 +2,10 @@
   "name": "magichacks-tumorai",
   "version": "1.0.0",
   "description": "MagicHacks hackathon",
-  "main": "GPTResults.js",
+  "main": "./api/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,10 @@
   },
   "homepage": "https://github.com/aryanka15/magichacks-tumorAI#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.21",
+    "openai": "^3.2.1"
   }
 }

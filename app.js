@@ -2,10 +2,10 @@ const fileInput = document.getElementById("file-input");
 const image = document.getElementById("image");
 const description = document.getElementById("prediction");
 let interpet_key = [
-  "glioma_tumor",
-  "meningioma_tumor",
-  "no_tumor",
-  "pituitary_tumor",
+  "glioma tumor",
+  "meningioma tumor",
+  "no tumor",
+  "pituitary tumor",
 ];
 let model = await tf.loadLayersModel("http://127.0.0.1:8080/model.json");
 console.log("Model loaded");
@@ -49,6 +49,13 @@ function displayDescription(text) {
   document.getElementById("prediction").innerHTML = text;
 }
 
+async function getGPTResults(prediction) {
+  let response = await fetch("http://localhost:8888/" + prediction);
+  let text = await response.text();
+  console.log(text);
+  return text;
+}
+
 /**
  * Get the image from file input and display on page
  */
@@ -83,7 +90,8 @@ function getImage() {
       const t4d = tf.tensor4d(resized.dataSync(), [1, 180, 180, 3]);
       let prediction = await classifyImage(t4d);
       displayDescription(prediction);
-      getGPTResults(prediction);
+      let result = await getGPTResults(prediction);
+      document.getElementById("chatGPTOutput").innerHTML = result;
     };
     // Add the image-loaded class to the body
     document.body.classList.add("image-loaded");
@@ -97,35 +105,3 @@ document.getElementById("submitButton").addEventListener("click", () => {
   console.log("Button clicked");
   getImage();
 });
-
-function getGPTResults(prediction) {
-  // curl https://api.openai.com/v1/chat/completions \
-  // -H "Content-Type: application/json" \
-  // -H "Authorization: Bearer $OPENAI_API_KEY" \
-  // -d '{
-  //    "model": "gpt-3.5-turbo",
-  //    "messages": [{"role": "user", "content": "Say this is a test!"}],
-  //    "temperature": 0.7
-  //  }'
-
-  // Convert curl above to fetch
-  fetch("https://api.openai.com/v1/chat/completions/", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization:
-        "Bearer " + "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",
-    },
-    body: JSON.stringify({
-      model: "text-davinci-003",
-      messages: [{ role: "user", content: "Give me info on " + prediction }],
-      temperature: 0,
-      max_tokens: 700,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-    });
-}
