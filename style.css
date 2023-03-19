@@ -1,0 +1,32 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: #222;
+    background-image: url('https://source.unsplash.com/1600x900/?landscape');
+    font-size: 120%;
+    line-height: 1.6;
+    padding: 50px;
+}
+
+.card {
+    background: #000000d0;
+    color: white;
+    padding: 2em;
+    border-radius: 30px;
+    width: 100%;
+    max-width: 820px;
+    margin: 1em;
+}
+
+.logo{
+    color:aliceblue;
+}
+
+#myFileInput {
+    background-color: lightblue;
+    border-radius:25px;
+}
